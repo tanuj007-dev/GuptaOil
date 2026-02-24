@@ -9,9 +9,10 @@ export default function HealthySwitch() {
   const scroll = (direction) => {
     if (!sliderRef.current) return;
 
-    const cardWidth = sliderRef.current.offsetWidth / 4; // 4 cards exact
+    // Adjusted for a more fluid scroll
+    const scrollAmount = sliderRef.current.offsetWidth / 2;
     sliderRef.current.scrollBy({
-      left: direction === "left" ? -cardWidth : cardWidth,
+      left: direction === "left" ? -scrollAmount : scrollAmount,
       behavior: "smooth",
     });
   };
@@ -36,38 +37,54 @@ export default function HealthySwitch() {
         </p>
       </div>
 
-      {/* Slider */}
-      <div className="mt-12 relative">
+      {/* Slider Wrapper */}
+      <div className="mt-12 relative group">
+
+        {/* MODERN CONTROLLERS (Floating) */}
+        <button
+          onClick={() => scroll("left")}
+          className="absolute left-[-20px] top-1/2 -translate-y-1/2 z-20 w-12 h-12 bg-white rounded-full shadow-xl border border-gray-100 flex items-center justify-center text-[#D36327] hover:bg-[#D36327] hover:text-white transition-all opacity-0 group-hover:opacity-100 hidden lg:flex"
+        >
+          <ChevronLeft size={24} />
+        </button>
+
+        <button
+          onClick={() => scroll("right")}
+          className="absolute right-[-20px] top-1/2 -translate-y-1/2 z-20 w-12 h-12 bg-white rounded-full shadow-xl border border-gray-100 flex items-center justify-center text-[#D36327] hover:bg-[#D36327] hover:text-white transition-all opacity-0 group-hover:opacity-100 hidden lg:flex"
+        >
+          <ChevronRight size={24} />
+        </button>
 
         {/* Cards Container */}
         <div
           ref={sliderRef}
-          className="flex gap-6 overflow-hidden scroll-smooth"
+          className="flex gap-6 overflow-x-auto no-scrollbar scroll-smooth px-2"
+          style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
         >
           {products.map((item, index) => (
             <div
               key={index}
-              className="w-full sm:w-1/2 lg:w-1/4 shrink-0 bg-white rounded-xl border border-gray-200 p-4"
+              className="w-[280px] sm:w-[320px] shrink-0 bg-white rounded-xl border border-gray-200 p-4"
             >
-              {/* Image Box */}
-              <div className="relative bg-[#ECECEC] rounded-lg h-[280px] flex items-center justify-center overflow-hidden">
+              {/* Image Box - HEIGHT INCREASED & OBJECT-COVER APPLIED */}
+              <div className="relative bg-[#ECECEC] rounded-lg h-[340px] flex items-center justify-center overflow-hidden">
 
-                <span className="absolute top-3 left-3 bg-white text-[#D36327] text-xs px-3 py-1 rounded-full">
+                <span className="absolute top-3 left-3 bg-white text-[#D36327] text-xs px-3 py-1 rounded-full z-10 shadow-sm">
                   Mustard
                 </span>
 
-                <span className="absolute top-3 right-3 bg-green-600 text-white text-xs px-3 py-1 rounded-full">
+                <span className="absolute top-0 right-0 bg-[#16A34A] text-white text-[11px] font-bold px-4 py-2 rounded-bl-2xl z-10">
                   Sale 70% off
                 </span>
 
-                {/* IMAGE FULL FIX */}
+                {/* THE FIX: object-cover fills the space, h-full/w-full ensures no cutting */}
                 <img
                   src={item.image}
                   alt="Product"
-                  className="h-full w-auto object-contain"
+                  className="h-full w-full object-cover transition-transform duration-500 hover:scale-105"
                 />
 
-                <button className="absolute bottom-4 right-4 bg-[#D36327] text-white text-xs px-4 py-2 rounded-full flex items-center gap-2 hover:bg-[#b94f1c] transition">
+                <button className="absolute bottom-4 right-4 bg-[#D36327] text-white text-xs px-5 py-2.5 rounded-full flex items-center gap-2 hover:bg-[#b94f1c] transition z-10 shadow-lg">
                   <ShoppingCart size={14} />
                   Buy Now
                 </button>
@@ -77,16 +94,16 @@ export default function HealthySwitch() {
               <div className="mt-4">
                 <h3 className="text-[14px] font-medium text-[#2E2E2E] leading-[20px]">
                   {item.title}
-                  <span className="text-[#D36327] text-xs ml-2">
+                  <span className="text-[#D36327] text-[11px] ml-2 font-semibold">
                     2k+ Unit Sold
                   </span>
                 </h3>
 
                 <div className="mt-2 flex items-center gap-2">
-                  <span className="text-black font-semibold">
+                  <span className="text-black font-bold text-[18px]">
                     {item.price}
                   </span>
-                  <span className="text-red-500 line-through text-sm">
+                  <span className="text-red-500 line-through text-[13px] opacity-70">
                     {item.oldPrice}
                   </span>
                 </div>
@@ -95,23 +112,20 @@ export default function HealthySwitch() {
           ))}
         </div>
 
-        {/* Controllers */}
-        <div className="flex justify-center gap-6 mt-10">
-
+        {/* Mobile Controllers (Keep centered for thumb reach) */}
+        <div className="flex lg:hidden justify-center gap-6 mt-8">
           <button
             onClick={() => scroll("left")}
-            className="w-12 h-12 rounded-full border-2 border-[#D36327] text-[#D36327] flex items-center justify-center hover:bg-[#D36327] hover:text-white transition"
+            className="w-11 h-11 rounded-full border border-[#D36327] text-[#D36327] flex items-center justify-center active:bg-[#D36327] active:text-white transition"
           >
             <ChevronLeft size={20} />
           </button>
-
           <button
             onClick={() => scroll("right")}
-            className="w-12 h-12 rounded-full border-2 border-[#D36327] text-[#D36327] flex items-center justify-center hover:bg-[#D36327] hover:text-white transition"
+            className="w-11 h-11 rounded-full border border-[#D36327] text-[#D36327] flex items-center justify-center active:bg-[#D36327] active:text-white transition"
           >
             <ChevronRight size={20} />
           </button>
-
         </div>
       </div>
     </section>

@@ -44,53 +44,57 @@ export default function DetailSection() {
   ];
 
   return (
-    <section className="w-full bg-[#F3F3F3] py-16 px-4 lg:px-12">
-
-      {/* Heading */}
-      <div className="text-center max-w-[900px] mx-auto">
-        <h2 className="text-[28px] sm:text-[36px] md:text-[42px] lg:text-[48px] font-semibold text-[#D36327] leading-tight">
+    <section className="w-full bg-[#F3F3F3] py-12 md:py-20 px-6">
+      {/* Heading Container - Max width restricted for better readability */}
+      <div className="text-center max-w-[800px] mx-auto">
+        <h2 className="text-[24px] sm:text-[32px] md:text-[36px] lg:text-[40px] font-bold text-[#D36327] leading-tight">
           Preserving Purity. Honoring Tradition.
           <br className="hidden sm:block" />
-          Nourishing Every Kitchen.
+          {" "}Nourishing Every Kitchen.
         </h2>
 
-        <p className="mt-4 text-[14px] sm:text-[16px] md:text-[18px] text-black">
+        <p className="mt-3 text-[14px] md:text-[16px] text-gray-700">
           Authentic traditional wood-pressed oils with uncompromised purity.
         </p>
       </div>
 
-      {/* Feature Grid */}
-      <div className="mt-14 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-12">
-
+      {/* Feature Grid - Restricted max-width on desktop to prevent cards from being too wide */}
+      <div className="mt-12 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 max-w-[1100px] mx-auto">
         {features.map((item, index) => {
           const Icon = item.icon;
 
           return (
             <div
               key={index}
-              className="bg-[#E46A11] rounded-[24px] 
-              w-full h-[260px] lg:h-[280px] 
+              className="bg-[#E46A11] rounded-[20px] 
+              w-full 
+              /* Mobile: Auto height with padding */
+              min-h-[220px] py-8
+              /* Desktop: Decreased from 280px to 240px */
+              lg:h-[240px] lg:py-0
               flex flex-col items-center justify-center 
-              text-center px-6 transition hover:scale-[1.02]"
+              text-center px-8 transition hover:scale-[1.02] shadow-md"
             >
-              {/* Icon */}
-              <div className="mb-6">
-                <Icon size={60} strokeWidth={1.5} className="text-white" />
+              {/* Icon - Scaled down slightly */}
+              <div className="mb-4">
+                <Icon 
+                  className="text-white w-[40px] h-[40px] lg:w-[48px] lg:h-[48px]" 
+                  strokeWidth={1.5} 
+                />
               </div>
 
-              {/* Title */}
-              <h3 className="text-white text-[18px] md:text-[20px] lg:text-[22px] font-semibold leading-snug">
+              {/* Title - Decreased font size */}
+              <h3 className="text-white text-[17px] md:text-[18px] lg:text-[19px] font-bold leading-tight">
                 {item.title}
               </h3>
 
-              {/* Description */}
-              <p className="mt-3 text-white text-[13px] md:text-[14px] leading-relaxed max-w-[280px]">
+              {/* Description - Compacted text */}
+              <p className="mt-2 text-white text-[13px] lg:text-[13.5px] leading-relaxed max-w-[240px] opacity-95">
                 {item.desc}
               </p>
             </div>
           );
         })}
-
       </div>
     </section>
   );
